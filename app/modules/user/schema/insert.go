@@ -1,6 +1,6 @@
 package schema
 
-type InsertSchema struct {
-	Username string `json:"username" binding:"required" validate:"required"`
-	Password string `json:"password" binding:"required" validate:"required"`
+type InsertUserSchema struct {
+	Name  string `json:"name" binding:"required" validate:"required"`
+	Phone string `json:"phone" binding:"required" validate:"required"`
 }
