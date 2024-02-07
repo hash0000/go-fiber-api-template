@@ -3,9 +3,9 @@ package middleware
 import (
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"go-fiber-api-template/app/common/responses"
+	"go-fiber-api-template/app/common/types"
 	"net/http"
-	"report-url-redirection/app/common/responses"
-	"report-url-redirection/app/common/types"
 )
 
 var validate = validator.New()

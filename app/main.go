@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
+	_ "github.com/lib/pq"
+	"go-fiber-api-template/app/common/database"
 	"go-fiber-api-template/app/common/responses"
 	"go-fiber-api-template/app/modules/user"
 	"log"
@@ -27,10 +29,12 @@ func main() {
 		},
 	})
 	app.Use(recover.New())
+	database.SetCon(fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", "127.0.0.1", 5432, "postgres", "root", "goApi"))
+	defer database.GetConnection.Close()
 
 	user.Router(app)
 
-	port := 4444
+	port := "4444"
 
 	err := app.Listen(fmt.Sprintf(":%s", port))
 	if err != nil {

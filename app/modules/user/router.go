@@ -1,8 +1,8 @@
 package user
 
 import (
-	"report-url-redirection/app/common/middleware"
-	"report-url-redirection/app/modules/user/dto"
+	"go-fiber-api-template/app/common/middleware"
+	"go-fiber-api-template/app/modules/user/schema"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,15 +10,9 @@ import (
 func Router(router fiber.Router) {
 	routeGroup := router.Group("/user")
 
-	routeGroup.Post("/sign-in", middleware.BodyValidationMiddleware[dto.SignInDto], func(ctx *fiber.Ctx) error {
-		var data = signIn(ctx.Locals("body").(dto.SignInDto))
+	routeGroup.Post("/create", middleware.BodyValidationMiddleware[schema.InsertUserSchema], func(ctx *fiber.Ctx) error {
+		var request = insert(ctx.Locals("body").(schema.InsertUserSchema))
 
-		return ctx.Status(data.Status).JSON(data)
-	})
-
-	routeGroup.Post("/create", middleware.BearerAuthMiddleware, middleware.BodyValidationMiddleware[dto.CreateDto], func(ctx *fiber.Ctx) error {
-		var data = signIn(ctx.Locals("body").(dto.SignInDto))
-
-		return ctx.Status(data.Status).JSON(data)
+		return ctx.Status(request.Status).JSON(request)
 	})
 }

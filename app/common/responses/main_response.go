@@ -1,6 +1,6 @@
 package responses
 
-import "report-url-redirection/app/common/types"
+import "go-fiber-api-template/app/common/types"
 
 type MainResponse struct {
 	Status          int                         `json:"status" bson:"status" binding:"required"`
