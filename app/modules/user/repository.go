@@ -6,7 +6,6 @@ import (
 	. "go-fiber-api-template/app/common/database/jet/goApi/public/table"
 	"go-fiber-api-template/app/common/helpers"
 	"go-fiber-api-template/app/modules/user/schema"
-	"time"
 
 	. "github.com/go-jet/jet/v2/postgres"
 	"github.com/google/uuid"
@@ -32,22 +31,21 @@ func insertR(schema schema.InsertUserSchema) any {
 	return dest
 }
 
+type SelectOneT struct {
+	ID    uuid.UUID `sql:"primary_key"`
+	Name  string
+	Phone string
+}
+
 func selectOneR(schema schema.SelectOneUserSchema) any {
-	var dest struct {
-		ID        uuid.UUID `sql:"primary_key" json:"id"`
-		Name      string    `json:"name"`
-		Phone     string    `json:"phone"`
-		CreatedAt time.Time `json:"createdAt"`
-	}
+	dest := SelectOneT{}
 
 	stmt := SELECT(
-		User.ID.AS("id"), User.Name.AS("name"), User.Phone.AS("phone"), User.CreatedAt.AS("createdAt"),
+		User.ID.AS("select_one_t.id"), User.Name.AS("select_one_t.name"), User.Phone.AS("select_one_t.phone"),
 	).FROM(
 		User,
 	).WHERE(
 		User.ID.EQ(UUID(schema.Id)),
-	).ORDER_BY(
-		User.CreatedAt.DESC(),
 	).LIMIT(1)
 
 	var err = stmt.Query(database.GetConnection, &dest)
