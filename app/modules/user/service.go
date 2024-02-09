@@ -14,3 +14,10 @@ func insert(schema schema.InsertUserSchema) *responses.MainResponse {
 
 	return &responses.MainResponse{Status: http.StatusCreated, Data: fiber.Map{"data": result}}
 }
+
+func selectOne(schema schema.SelectOneUserSchema) *responses.MainResponse {
+
+	result := selectOneR(schema)
+
+	return &responses.MainResponse{Status: http.StatusCreated, Data: fiber.Map{"data": result}}
+}
