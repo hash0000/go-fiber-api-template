@@ -5,43 +5,34 @@ import (
 	"go-fiber-api-template/app/common/database/jet/goApi/public/model"
 	. "go-fiber-api-template/app/common/database/jet/goApi/public/table"
 	"go-fiber-api-template/app/common/helpers"
+	"go-fiber-api-template/app/common/types/entities"
 	"go-fiber-api-template/app/modules/user/schema"
 
 	. "github.com/go-jet/jet/v2/postgres"
-	"github.com/google/uuid"
 )
 
-func insertR(schema schema.InsertUserSchema) any {
-	user := model.User{
+func insertR(schema schema.InsertUserSchema) entities.User {
+	newUser := model.User{
 		Name:  schema.Name,
 		Phone: schema.Phone,
 	}
 
-	stmt := User.INSERT(User.Name, User.Phone).MODEL(user).RETURNING(User.ID, User.Name)
+	dest := entities.User{}
 
-	var dest struct {
-		Id   uuid.UUID `sql:"primary_key"`
-		Name string
-	}
+	stmt := User.INSERT(User.Name, User.Phone).MODEL(newUser).RETURNING(User.AllColumns)
 
-	err := stmt.Query(database.GetConnection, &user)
+	err := stmt.Query(database.GetConnection, &dest)
 
 	helpers.PanicOnError(err)
 
 	return dest
 }
 
-type SelectOneT struct {
-	ID    uuid.UUID `sql:"primary_key"`
-	Name  string
-	Phone string
-}
-
-func selectOneR(schema schema.SelectOneUserSchema) any {
-	dest := SelectOneT{}
+func selectOneR(schema schema.SelectOneUserSchema) entities.User {
+	var dest = entities.User{}
 
 	stmt := SELECT(
-		User.ID.AS("select_one_t.id"), User.Name.AS("select_one_t.name"), User.Phone.AS("select_one_t.phone"),
+		User.ID, User.Name, User.Phone,
 	).FROM(
 		User,
 	).WHERE(

@@ -16,8 +16,8 @@ func Router(router fiber.Router) {
 		return ctx.Status(request.Status).JSON(request)
 	})
 
-	routeGroup.Post("/read-one", middleware.BodyValidationMiddleware[schema.SelectOneUserSchema], func(ctx *fiber.Ctx) error {
-		var request = selectOne(ctx.Locals("body").(schema.SelectOneUserSchema))
+	routeGroup.Get("/read-one", middleware.QueryStringValidationMiddleware[schema.SelectOneUserSchema], func(ctx *fiber.Ctx) error {
+		var request = selectOne(ctx.Locals("query").(schema.SelectOneUserSchema))
 
 		return ctx.Status(request.Status).JSON(request)
 	})
