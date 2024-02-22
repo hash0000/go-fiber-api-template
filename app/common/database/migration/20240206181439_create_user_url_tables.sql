@@ -20,4 +20,5 @@ CREATE UNIQUE INDEX user_username_key ON "user" USING btree (username);
 
 -- +goose Down
 DROP TABLE "user";
+
 DROP TABLE "url";
