@@ -8,3 +8,7 @@ type MainResponse struct {
 	ErrorTypeCode   int                         `json:"errorTypeCode,omitempty" bson:"errorTypeCode,omitempty"`
 	ValidationError []types.ValidationErrorType `json:"validationError,omitempty" bson:"validationError,omitempty"`
 }
+
+func (*MainResponse) Error() string {
+	panic("unimplemented")
+}

@@ -13,8 +13,9 @@ import (
 )
 
 type User struct {
-	ID        uuid.UUID `sql:"primary_key"`
-	Name      string
-	Phone     string
-	CreatedAt time.Time
+	ID          uuid.UUID `sql:"primary_key"`
+	Username    string
+	Password    string
+	GrandAccess bool
+	CreatedAt   time.Time
 }

@@ -17,10 +17,11 @@ type userTable struct {
 	postgres.Table
 
 	// Columns
-	ID        postgres.ColumnString
-	Name      postgres.ColumnString
-	Phone     postgres.ColumnString
-	CreatedAt postgres.ColumnTimestampz
+	ID          postgres.ColumnString
+	Username    postgres.ColumnString
+	Password    postgres.ColumnString
+	GrandAccess postgres.ColumnBool
+	CreatedAt   postgres.ColumnTimestampz
 
 	AllColumns     postgres.ColumnList
 	MutableColumns postgres.ColumnList
@@ -61,22 +62,24 @@ func newUserTable(schemaName, tableName, alias string) *UserTable {
 
 func newUserTableImpl(schemaName, tableName, alias string) userTable {
 	var (
-		IDColumn        = postgres.StringColumn("id")
-		NameColumn      = postgres.StringColumn("name")
-		PhoneColumn     = postgres.StringColumn("phone")
-		CreatedAtColumn = postgres.TimestampzColumn("createdAt")
-		allColumns      = postgres.ColumnList{IDColumn, NameColumn, PhoneColumn, CreatedAtColumn}
-		mutableColumns  = postgres.ColumnList{NameColumn, PhoneColumn, CreatedAtColumn}
+		IDColumn          = postgres.StringColumn("id")
+		UsernameColumn    = postgres.StringColumn("username")
+		PasswordColumn    = postgres.StringColumn("password")
+		GrandAccessColumn = postgres.BoolColumn("grandAccess")
+		CreatedAtColumn   = postgres.TimestampzColumn("createdAt")
+		allColumns        = postgres.ColumnList{IDColumn, UsernameColumn, PasswordColumn, GrandAccessColumn, CreatedAtColumn}
+		mutableColumns    = postgres.ColumnList{UsernameColumn, PasswordColumn, GrandAccessColumn, CreatedAtColumn}
 	)
 
 	return userTable{
 		Table: postgres.NewTable(schemaName, tableName, alias, allColumns...),
 
 		//Columns
-		ID:        IDColumn,
-		Name:      NameColumn,
-		Phone:     PhoneColumn,
-		CreatedAt: CreatedAtColumn,
+		ID:          IDColumn,
+		Username:    UsernameColumn,
+		Password:    PasswordColumn,
+		GrandAccess: GrandAccessColumn,
+		CreatedAt:   CreatedAtColumn,
 
 		AllColumns:     allColumns,
 		MutableColumns: mutableColumns,
