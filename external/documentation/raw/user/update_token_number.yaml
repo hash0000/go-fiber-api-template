@@ -1,0 +1,32 @@
+/user/update-token-number:
+  patch:
+    tags:
+      - User
+    summary: Update user token number
+    security:
+      - apiKey: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              token_number:
+                type: integer
+                example: 300
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  example: 200
+      422:
+        $ref: "#/definitions/422-status"

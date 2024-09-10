@@ -1,0 +1,55 @@
+/user:
+  patch:
+    tags:
+      - User
+    summary: Update user information
+    security:
+      - apiKey: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: integer
+                format: int64
+                description: The unique identifier of the user
+                example: 1234567890
+              first_name:
+                type: string
+                nullable: true
+                description: The first name of the user
+                example: "John"
+              first_name_present:
+                type: boolean
+                description: Indicates if the first name is present
+                example: true
+              last_name:
+                type: string
+                nullable: true
+                description: The last name of the user
+                example: "Doe"
+              last_name_present:
+                type: boolean
+                description: Indicates if the last name is present
+                example: true
+              telegram_username:
+                type: string
+                nullable: true
+                description: The Telegram username of the user
+                example: "johndoe_telegram"
+              telegram_username_present:
+                type: boolean
+                description: Indicates if the Telegram username is present
+                example: true
+    responses:
+      200:
+        $ref: "#/definitions/200-status"
+      400:
+        $ref: "#/definitions/400-status"
+      422:
+        $ref: "#/definitions/422-status"
+      403:
+        $ref: "#/definitions/403-status"

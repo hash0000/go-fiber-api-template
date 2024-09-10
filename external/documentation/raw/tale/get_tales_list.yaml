@@ -1,0 +1,145 @@
+/tale/get-list/{page}:
+  get:
+    tags:
+      - Tale
+    summary: Get a list of tales
+    security:
+      - apiKey: []
+    parameters:
+      - in: query
+        name: sort_by
+        required: true
+        schema:
+          type: string
+          example: "DESC"
+      - in: query
+        name: order_by
+        required: true
+        schema:
+          type: string
+          example: "created_at"
+      - in: query
+        name: limit
+        required: true
+        schema:
+          type: integer
+          example: 10000
+      - in: query
+        name: date_from
+        required: true
+        schema:
+          type: string
+          format: date
+          example: "2024-08-27"
+      - in: query
+        name: date_to
+        required: true
+        schema:
+          type: string
+          format: date-time
+          example: "2024-08-29T23:00:00"
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                data:
+                  type: object
+                  properties:
+                    count:
+                      type: integer
+                      example: 1
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 171
+                          name:
+                            type: string
+                            example: "Волшебный сад Яночки"
+                          user_id:
+                            type: integer
+                          file_name:
+                            type: string
+                            example: "tale_d251fdaf-a8a6-48f3-9944-b927fe967ed7.pdf"
+                          is_payed:
+                            type: boolean
+                            example: true
+                          tale_generation_id:
+                            type: string
+                            example: "d251fdaf-a8a6-48f3-9944-b927fe967ed7"
+                          child_data:
+                            type: string
+                            example: "Яна, Яночка, Януся, девочка, 6 месяцев"
+                          background_characters:
+                            type: string
+                            example: "Собачка дедушки и бабушки, пёсик Кузя; мама Настя..."
+                          preferences:
+                            type: string
+                            example: "На данный момент Яна любит грызунки..."
+                          moral:
+                            type: string
+                            example: "Нужно быть смелой и ничего не бояться..."
+                          open_ai_answer:
+                            type: object
+                            properties:
+                              title:
+                                type: string
+                                example: "Волшебный сад Яночки"
+                              chapters:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    text:
+                                      type: string
+                                      example: "Жила-была маленькая девочка..."
+                                    title:
+                                      type: string
+                                      example: "Волшебство сада"
+                                    pic_generation:
+                                      type: string
+                                      example: "six-month-old baby girl..."
+                              questions_about_tale:
+                                type: array
+                                items:
+                                  type: string
+                                  example: "Как Яна проявила смелость в сказке?"
+                          fabula_img_to_text_json:
+                            type: object
+                            properties:
+                              label:
+                                type: string
+                                example: "густой рост растений со смесью зеленой листвы..."
+                              keywords:
+                                type: string
+                                example: ""
+                              description:
+                                type: string
+                                example: "густой рост растений со смесью зеленой листвы..."
+                              en_keywords:
+                                type: string
+                                example: ""
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: "2024-08-29T15:08:33.007689+07:00"
+                    pages:
+                      type: integer
+                      example: 1
+
+      400:
+        $ref: "#/definitions/400-status"
+      422:
+        $ref: "#/definitions/422-status"
+      403:
+        $ref: "#/definitions/403-status"

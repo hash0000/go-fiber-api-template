@@ -1,2 +1,6 @@
 .idea
-/app/build_cache
+/tmp/
+.env
+/external/store/
+/swagger_app/node_modules
+/external/temp/img_to_text_json/

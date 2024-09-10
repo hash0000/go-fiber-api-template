@@ -1,24 +1,18 @@
 package user
 
 import (
-	"go-fiber-api-template/app/common/middleware"
+	"go-fiber-api-template/app/common/middlewares"
+	"go-fiber-api-template/app/common/schemas"
 	"go-fiber-api-template/app/modules/user/schema"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func Router(router fiber.Router) {
-	routeGroup := router.Group("/user")
-
-	routeGroup.Post("/create", middleware.BodyValidationMiddleware[schema.InsertUserSchema], func(ctx *fiber.Ctx) error {
-		var request = insert(ctx.Locals("body").(schema.InsertUserSchema))
-
-		return ctx.Status(request.Status).JSON(request)
-	})
-
-	routeGroup.Get("/read-one", middleware.QueryStringValidationMiddleware[schema.SelectOneUserSchema], func(ctx *fiber.Ctx) error {
-		var request = selectOne(ctx.Locals("query").(schema.SelectOneUserSchema))
-
-		return ctx.Status(request.Status).JSON(request)
-	})
+	router.Post("", middlewares.CheckAPIToken, middlewares.BodyValidationMiddleware[schema.CreateUserSchema], Create)
+	router.Patch("/update-token-number", middlewares.CheckAPIToken, middlewares.BodyValidationMiddleware[schema.UpdateTokenNumberSchema], UpdateTokenNumber)
+	router.Patch("", middlewares.CheckAPIToken, middlewares.BodyValidationMiddleware[schema.UpdateUserSchema], updateUserData)
+	router.Get("/select-one/:id<int64>", middlewares.CheckAPIToken, middlewares.ParamsValidationMiddleware[schema.IdSchema], GetOne)
+	router.Get("/select-one-with-tales/:id<int64>", middlewares.CheckAPIToken, middlewares.ParamsValidationMiddleware[schema.IdSchema], GetOneWithBooks)
+	router.Get("/get-list/tales/:page<int16>", middlewares.CheckAPIToken, middlewares.ParamsValidationMiddleware[schemas.PaginationSchema], middlewares.QueryStringValidationMiddleware[schema.GetListWithTaleSchema], getListWithTales)
 }

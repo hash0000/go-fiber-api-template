@@ -1,0 +1,63 @@
+/tale/count-by-date:
+  get:
+    tags:
+      - Tale
+    summary: Get generation count statistic
+    parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          example: 2024-01-01
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          example: 2024-12-31
+
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                count:
+                  type: number
+                  example: 200
+
+      422:
+        $ref: "#/definitions/422-status"
+
+/tale/user/count-by-date:
+  get:
+    tags:
+      - Tale
+    summary: Get distinct users count statistic
+    parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          example: 2024-01-01
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          example: 2024-12-31
+
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                count:
+                  type: number
+                  example: 200
+
+      422:
+        $ref: "#/definitions/422-status"

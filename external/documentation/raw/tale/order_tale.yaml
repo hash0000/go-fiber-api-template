@@ -1,0 +1,41 @@
+/tale/order:
+  post:
+    tags:
+      - Tale
+    summary: Order tale
+    security:
+      - bearer: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              child_data:
+                type: string
+              background_characters:
+                type: string
+              preferences:
+                type: string
+              moral:
+                type: string
+              url:
+                type: string
+              id:
+                type: integer
+
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  example: 200
+
+      422:
+        $ref: "#/definitions/422-status"

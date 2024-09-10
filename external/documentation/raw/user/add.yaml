@@ -1,0 +1,32 @@
+/user:
+  post:
+    tags:
+      - User
+    summary: Add a new user
+    security:
+      - apiKey: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: integer
+              invite_code:
+                type: string
+
+    responses:
+      201:
+        description: Created
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  example: 201
+      422:
+        $ref: "#/definitions/422-status"

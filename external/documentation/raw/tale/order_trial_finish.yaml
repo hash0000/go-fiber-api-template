@@ -1,0 +1,33 @@
+/tale/order/trial/finish:
+  post:
+    tags:
+      - Tale
+    summary: Order trial finish
+    security:
+      - bearer: [ ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              tale_generation_id:
+                type: string
+              user_id:
+                type: integer
+
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: number
+                  example: 200
+
+      422:
+        $ref: "#/definitions/422-status"

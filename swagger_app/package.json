@@ -1,0 +1,10 @@
+{
+  "name": "swagger-docs",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "dependencies": {
+    "swagger-jsdoc": "^6.2.8"
+  }
+}

@@ -1,0 +1,17 @@
+FROM golang:1.22.4-alpine3.20 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+RUN go install github.com/pressly/goose/v3/cmd/goose@latest
+
+COPY . .
+
+RUN go build -o ./tmp/main.exe ./app
+
+EXPOSE 8008
+
+CMD ["./tmp/main.exe"]

@@ -1,0 +1,171 @@
+/user/get-list/tales/{page}:
+  get:
+    tags:
+      - User
+    summary: Get list with tales
+    security:
+      - apiKey: [ ]
+    parameters:
+      - in: path
+        name: page
+        required: true
+        schema:
+          type: integer
+          format: int16
+      - in: query
+        name: sort_by
+        required: true
+        schema:
+          type: string
+          example: "DESC"
+      - in: query
+        name: order_by
+        required: true
+        schema:
+          type: string
+          example: "created_at"
+      - in: query
+        name: limit
+        required: true
+        schema:
+          type: integer
+          example: 10
+      - in: query
+        name: date_from
+        required: true
+        schema:
+          type: string
+          format: date
+          example: "2020-01-01"
+      - in: query
+        name: date_to
+        required: true
+        schema:
+          type: string
+          format: date
+          example: "2026-01-01"
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                data:
+                  type: object
+                  properties:
+                    count:
+                      type: integer
+                      example: 1
+                    pages:
+                      type: integer
+                      example: 1
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 00000000
+                          token_number:
+                            type: integer
+                            example: 4
+                          use_trial:
+                            type: boolean
+                            example: false
+                          is_payed_tale:
+                            type: boolean
+                            example: true
+                          fist_name:
+                            type: string
+                          last_name:
+                            type: string
+                          telegram_username:
+                            type: string
+                          invite_code:
+                            type: string
+                            example: "28276498-6850-4eed-b976-68d6ddb1d7ca"
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: "2024-08-27T18:20:13.107972+07:00"
+                          tales:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 25
+                                name:
+                                  type: string
+                                  example: "Яночка и волшебный сад"
+                                file_name:
+                                  type: string
+                                  example: "tale_f4238e29-033e-488b-9b12-cfaaefc39045.pdf"
+                                is_payed:
+                                  type: boolean
+                                  example: true
+                                tale_generation_id:
+                                  type: string
+                                  example: "f4238e29-033e-488b-9b12-cfaaefc39045"
+                                child_data:
+                                  type: string
+                                  example: "Яна, Яночка, Януся, девочка, 6 месяцев"
+                                preferences:
+                                  type: string
+                                  example: "На данный момент Яна любит грызунки, ползать за всеми игрушками, смотреть телевизор, больше всего любит , чтобы носили на руках, обожает купаться , смотреть на воду, ловить струйки воды."
+                                moral:
+                                  type: string
+                                  example: "Нужно быть смелой и ничего не бояться, мир любит тебя. Также главное быть доброй и всегда оставаться человеком, любить животных, но себя не давать в обиду."
+                                open_ai_answer:
+                                  type: object
+                                  properties:
+                                    title:
+                                      type: string
+                                      example: "Яночка и волшебный сад"
+                                    chapters:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          text:
+                                            type: string
+                                            example: "Once upon a time..."
+                                          title:
+                                            type: string
+                                            example: "Яночка и волшебный сад"
+                                          pic_generation:
+                                            type: string
+                                            example: "baby girl, lush green leaves, violet flowers"
+                                    questions_about_tale:
+                                      type: array
+                                      items:
+                                        type: string
+                                        example: "What made Яночка feel brave during her journey?"
+                                fabula_img_to_text_json:
+                                  type: object
+                                  properties:
+                                    label:
+                                      type: string
+                                      example: "естественную сцену с обилием зеленой листвы и фиолетовых цветов"
+                                    keywords:
+                                      type: string
+                                      example: ""
+                                    description:
+                                      type: string
+                                      example: "естественную сцену с обилием зеленой листвы и фиолетовых цветов. Ключевые фразы: густая зелень, фиолетовые цветы, естественная обстановка, пышная листва, яркие цвета."
+                                    en_keywords:
+                                      type: string
+                                      example: ""
+                                created_at:
+                                  type: string
+                                  format: date-time
+                                  example: "2024-08-27T18:25:04.169153+07:00"
+      422:
+        $ref: "#/definitions/422-status"

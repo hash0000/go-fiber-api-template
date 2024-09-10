@@ -1,0 +1,83 @@
+definitions:
+  created-empty:
+    description: Created
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 201
+
+  200-status:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 200
+
+  uuid-param-arg:
+    in: path
+    description: Param type of id
+    required: true
+    name: id
+    schema:
+      type: string
+
+  400-status:
+    description: Bad Request
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 400
+  
+  404-status:
+    description: Not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 404
+
+  403-status:
+    description: Forbidden
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 403
+
+  422-status:
+    description: Unprocessable Entity
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: number
+              example: 422
+            validationError:
+              type: array
+              items:
+                type: object
+                properties:
+                  property:
+                    type: string
+                  type:
+                    type: string

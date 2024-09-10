@@ -1,0 +1,103 @@
+/tale/get-one/{id}:
+  get:
+    tags:
+      - Tale
+    summary: Get one
+    security:
+      - apiKey: []
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+          format: int64
+
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  example: 200
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Яна в стране зелёных лесов и фиолетовых цветов"
+                    file_name:
+                      type: string
+                      example: "tale_be6c1599-450f-4008-8cac-ee9ede0caccc.pdf"
+                    is_payed:
+                      type: boolean
+                      example: true
+                    tale_generation_id:
+                      type: string
+                      example: "be6c1599-450f-4008-8cac-ee9ede0caccc"
+                    child_data:
+                      type: string
+                      example: "Яна, Яночка, Януся, девочка, 6 месяцев"
+                    preferences:
+                      type: string
+                      example: "На данный момент Яна любит грызунки, ползать за всеми игрушками, смотреть телевизор, больше всего любит , чтобы носили на руках, обожает купаться , смотреть на воду, ловить струйки воды."
+                    moral:
+                      type: string
+                      example: "Нужно быть смелой и ничего не бояться, мир любит тебя. Также главное быть доброй и всегда оставаться человеком, любить животных, но себя не давать в обиду."
+                    open_ai_answer:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: "Яна в стране зелёных лесов и фиолетовых цветов"
+                        chapters:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              text:
+                                type: string
+                                example: "В одной маленькой деревушке..."
+                              title:
+                                type: string
+                                example: "Яна в стране зелёных лесов и фиолетовых цветов"
+                              pic_generation:
+                                type: string
+                                example: "girl, green leaves, purple flowers, sunny forest"
+                        questions_about_tale:
+                          type: array
+                          items:
+                            type: string
+                            example: "Какие черты характера помогали Яне в её путешествиях?"
+                    fabula_img_to_text_json:
+                      type: object
+                      properties:
+                        label:
+                          type: string
+                          example: "естественную сцену с обилием зеленой листвы и фиолетовых цветов"
+                        keywords:
+                          type: string
+                          example: ""
+                        description:
+                          type: string
+                          example: "естественную сцену с обилием зеленой листвы и фиолетовых цветов. Ключевые фразы: густая зелень, фиолетовые цветы, естественная обстановка, пышная листва, яркие цвета."
+                        en_keywords:
+                          type: string
+                          example: ""
+                    created_at:
+                      type: string
+                      format: date-time
+                      example: "2024-08-28T11:48:00.580095+07:00"
+
+      422:
+        $ref: "#/definitions/422-status"
+
+      404:
+        $ref: "#/definitions/404-status"

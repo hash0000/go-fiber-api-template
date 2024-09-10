@@ -1,6 +1,6 @@
-start_air:
+start_rebuild_mode:
 	air
-migrate:
-	goose -dir ./app/common/database/migration postgres "postgres://postgres:root@127.0.0.1:5432/tsFastifyTemplate" up
+migrate_local:
+	goose -dir ./app/common/database/migrations postgres "postgres://postgres:root@127.0.0.1:5432/neurotales" up
 jet:
-	jet -dsn=postgresql://postgres:root@127.0.0.1:5432/tsFastifyTemplate?sslmode=disable -path="./app/common/database/"
+	jet -dsn=postgresql://postgres:root@127.0.0.1:5432/neurotales?sslmode=disable -path="./app/common/types/jet"

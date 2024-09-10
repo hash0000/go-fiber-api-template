@@ -1,0 +1,1512 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Template",
+    "version": "0.0.1"
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiTokenAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "api-token"
+      }
+    }
+  },
+  "paths": {
+    "/tale/download/{file_name}": {
+      "get": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Get file",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "file_name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dir_path",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF file",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/tale/get-one/{id}": {
+      "get": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Get one",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Яна в стране зелёных лесов и фиолетовых цветов"
+                        },
+                        "file_name": {
+                          "type": "string",
+                          "example": "tale_be6c1599-450f-4008-8cac-ee9ede0caccc.pdf"
+                        },
+                        "is_payed": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "tale_generation_id": {
+                          "type": "string",
+                          "example": "be6c1599-450f-4008-8cac-ee9ede0caccc"
+                        },
+                        "child_data": {
+                          "type": "string",
+                          "example": "Яна, Яночка, Януся, девочка, 6 месяцев"
+                        },
+                        "preferences": {
+                          "type": "string",
+                          "example": "На данный момент Яна любит грызунки, ползать за всеми игрушками, смотреть телевизор, больше всего любит , чтобы носили на руках, обожает купаться , смотреть на воду, ловить струйки воды."
+                        },
+                        "moral": {
+                          "type": "string",
+                          "example": "Нужно быть смелой и ничего не бояться, мир любит тебя. Также главное быть доброй и всегда оставаться человеком, любить животных, но себя не давать в обиду."
+                        },
+                        "open_ai_answer": {
+                          "type": "object",
+                          "properties": {
+                            "title": {
+                              "type": "string",
+                              "example": "Яна в стране зелёных лесов и фиолетовых цветов"
+                            },
+                            "chapters": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "text": {
+                                    "type": "string",
+                                    "example": "В одной маленькой деревушке..."
+                                  },
+                                  "title": {
+                                    "type": "string",
+                                    "example": "Яна в стране зелёных лесов и фиолетовых цветов"
+                                  },
+                                  "pic_generation": {
+                                    "type": "string",
+                                    "example": "girl, green leaves, purple flowers, sunny forest"
+                                  }
+                                }
+                              }
+                            },
+                            "questions_about_tale": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "example": "Какие черты характера помогали Яне в её путешествиях?"
+                              }
+                            }
+                          }
+                        },
+                        "fabula_img_to_text_json": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string",
+                              "example": "естественную сцену с обилием зеленой листвы и фиолетовых цветов"
+                            },
+                            "keywords": {
+                              "type": "string",
+                              "example": ""
+                            },
+                            "description": {
+                              "type": "string",
+                              "example": "естественную сцену с обилием зеленой листвы и фиолетовых цветов. Ключевые фразы: густая зелень, фиолетовые цветы, естественная обстановка, пышная листва, яркие цвета."
+                            },
+                            "en_keywords": {
+                              "type": "string",
+                              "example": ""
+                            }
+                          }
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-28T11:48:00.580095+07:00"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/definitions/404-status"
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/tale/get-list/{page}": {
+      "get": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Get a list of tales",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sort_by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "DESC"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "created_at"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 10000
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_from",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2024-08-27"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-08-29T23:00:00"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 171
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Волшебный сад Яночки"
+                              },
+                              "user_id": {
+                                "type": "integer"
+                              },
+                              "file_name": {
+                                "type": "string",
+                                "example": "tale_d251fdaf-a8a6-48f3-9944-b927fe967ed7.pdf"
+                              },
+                              "is_payed": {
+                                "type": "boolean",
+                                "example": true
+                              },
+                              "tale_generation_id": {
+                                "type": "string",
+                                "example": "d251fdaf-a8a6-48f3-9944-b927fe967ed7"
+                              },
+                              "child_data": {
+                                "type": "string",
+                                "example": "Яна, Яночка, Януся, девочка, 6 месяцев"
+                              },
+                              "background_characters": {
+                                "type": "string",
+                                "example": "Собачка дедушки и бабушки, пёсик Кузя; мама Настя..."
+                              },
+                              "preferences": {
+                                "type": "string",
+                                "example": "На данный момент Яна любит грызунки..."
+                              },
+                              "moral": {
+                                "type": "string",
+                                "example": "Нужно быть смелой и ничего не бояться..."
+                              },
+                              "open_ai_answer": {
+                                "type": "object",
+                                "properties": {
+                                  "title": {
+                                    "type": "string",
+                                    "example": "Волшебный сад Яночки"
+                                  },
+                                  "chapters": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "text": {
+                                          "type": "string",
+                                          "example": "Жила-была маленькая девочка..."
+                                        },
+                                        "title": {
+                                          "type": "string",
+                                          "example": "Волшебство сада"
+                                        },
+                                        "pic_generation": {
+                                          "type": "string",
+                                          "example": "six-month-old baby girl..."
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "questions_about_tale": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "example": "Как Яна проявила смелость в сказке?"
+                                    }
+                                  }
+                                }
+                              },
+                              "fabula_img_to_text_json": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string",
+                                    "example": "густой рост растений со смесью зеленой листвы..."
+                                  },
+                                  "keywords": {
+                                    "type": "string",
+                                    "example": ""
+                                  },
+                                  "description": {
+                                    "type": "string",
+                                    "example": "густой рост растений со смесью зеленой листвы..."
+                                  },
+                                  "en_keywords": {
+                                    "type": "string",
+                                    "example": ""
+                                  }
+                                }
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-08-29T15:08:33.007689+07:00"
+                              }
+                            }
+                          }
+                        },
+                        "pages": {
+                          "type": "integer",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/definitions/400-status"
+          },
+          "403": {
+            "$ref": "#/definitions/403-status"
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/tale/order": {
+      "post": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Order tale",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "child_data": {
+                    "type": "string"
+                  },
+                  "background_characters": {
+                    "type": "string"
+                  },
+                  "preferences": {
+                    "type": "string"
+                  },
+                  "moral": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/tale/order/trial/finish": {
+      "post": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Order trial finish",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tale_generation_id": {
+                    "type": "string"
+                  },
+                  "user_id": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/tale/order/trial/start": {
+      "post": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Order trial tale",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "child_data": {
+                    "type": "string"
+                  },
+                  "background_characters": {
+                    "type": "string"
+                  },
+                  "preferences": {
+                    "type": "string"
+                  },
+                  "moral": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/tale/count-by-date": {
+      "get": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Get generation count statistic",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date_from",
+            "schema": {
+              "type": "string",
+              "example": "2024-01-01"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "schema": {
+              "type": "string",
+              "example": "2024-12-31"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/tale/user/count-by-date": {
+      "get": {
+        "tags": [
+          "Tale"
+        ],
+        "summary": "Get distinct users count statistic",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date_from",
+            "schema": {
+              "type": "string",
+              "example": "2024-01-01"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "schema": {
+              "type": "string",
+              "example": "2024-12-31"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "number",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Add a new user",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer"
+                  },
+                  "invite_code": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 201
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user information",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "The unique identifier of the user",
+                    "example": 1234567890
+                  },
+                  "first_name": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The first name of the user",
+                    "example": "John"
+                  },
+                  "first_name_present": {
+                    "type": "boolean",
+                    "description": "Indicates if the first name is present",
+                    "example": true
+                  },
+                  "last_name": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The last name of the user",
+                    "example": "Doe"
+                  },
+                  "last_name_present": {
+                    "type": "boolean",
+                    "description": "Indicates if the last name is present",
+                    "example": true
+                  },
+                  "telegram_username": {
+                    "type": "string",
+                    "nullable": true,
+                    "description": "The Telegram username of the user",
+                    "example": "johndoe_telegram"
+                  },
+                  "telegram_username_present": {
+                    "type": "boolean",
+                    "description": "Indicates if the Telegram username is present",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/definitions/200-status"
+          },
+          "400": {
+            "$ref": "#/definitions/400-status"
+          },
+          "403": {
+            "$ref": "#/definitions/403-status"
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/user/get-list/tales/{page}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get list with tales",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int16"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort_by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "DESC"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_by",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "created_at"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 10
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_from",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2020-01-01"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2026-01-01"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "count": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "pages": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 0
+                              },
+                              "token_number": {
+                                "type": "integer",
+                                "example": 4
+                              },
+                              "use_trial": {
+                                "type": "boolean",
+                                "example": false
+                              },
+                              "is_payed_tale": {
+                                "type": "boolean",
+                                "example": true
+                              },
+                              "fist_name": {
+                                "type": "string"
+                              },
+                              "last_name": {
+                                "type": "string"
+                              },
+                              "telegram_username": {
+                                "type": "string"
+                              },
+                              "invite_code": {
+                                "type": "string",
+                                "example": "28276498-6850-4eed-b976-68d6ddb1d7ca"
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-08-27T18:20:13.107972+07:00"
+                              },
+                              "tales": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "integer",
+                                      "example": 25
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "example": "Яночка и волшебный сад"
+                                    },
+                                    "file_name": {
+                                      "type": "string",
+                                      "example": "tale_f4238e29-033e-488b-9b12-cfaaefc39045.pdf"
+                                    },
+                                    "is_payed": {
+                                      "type": "boolean",
+                                      "example": true
+                                    },
+                                    "tale_generation_id": {
+                                      "type": "string",
+                                      "example": "f4238e29-033e-488b-9b12-cfaaefc39045"
+                                    },
+                                    "child_data": {
+                                      "type": "string",
+                                      "example": "Яна, Яночка, Януся, девочка, 6 месяцев"
+                                    },
+                                    "preferences": {
+                                      "type": "string",
+                                      "example": "На данный момент Яна любит грызунки, ползать за всеми игрушками, смотреть телевизор, больше всего любит , чтобы носили на руках, обожает купаться , смотреть на воду, ловить струйки воды."
+                                    },
+                                    "moral": {
+                                      "type": "string",
+                                      "example": "Нужно быть смелой и ничего не бояться, мир любит тебя. Также главное быть доброй и всегда оставаться человеком, любить животных, но себя не давать в обиду."
+                                    },
+                                    "open_ai_answer": {
+                                      "type": "object",
+                                      "properties": {
+                                        "title": {
+                                          "type": "string",
+                                          "example": "Яночка и волшебный сад"
+                                        },
+                                        "chapters": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "text": {
+                                                "type": "string",
+                                                "example": "Once upon a time..."
+                                              },
+                                              "title": {
+                                                "type": "string",
+                                                "example": "Яночка и волшебный сад"
+                                              },
+                                              "pic_generation": {
+                                                "type": "string",
+                                                "example": "baby girl, lush green leaves, violet flowers"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "questions_about_tale": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "string",
+                                            "example": "What made Яночка feel brave during her journey?"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "fabula_img_to_text_json": {
+                                      "type": "object",
+                                      "properties": {
+                                        "label": {
+                                          "type": "string",
+                                          "example": "естественную сцену с обилием зеленой листвы и фиолетовых цветов"
+                                        },
+                                        "keywords": {
+                                          "type": "string",
+                                          "example": ""
+                                        },
+                                        "description": {
+                                          "type": "string",
+                                          "example": "естественную сцену с обилием зеленой листвы и фиолетовых цветов. Ключевые фразы: густая зелень, фиолетовые цветы, естественная обстановка, пышная листва, яркие цвета."
+                                        },
+                                        "en_keywords": {
+                                          "type": "string",
+                                          "example": ""
+                                        }
+                                      }
+                                    },
+                                    "created_at": {
+                                      "type": "string",
+                                      "format": "date-time",
+                                      "example": "2024-08-27T18:25:04.169153+07:00"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/user/select-one-with-tales/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get one user with books",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "token_number": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "use_trial": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "is_payed_tale": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "invite_code": {
+                          "type": "string",
+                          "example": "e164727b-2eae-4e46-983d-3ef95096bbfd"
+                        },
+                        "fist_name": {
+                          "type": "string"
+                        },
+                        "last_name": {
+                          "type": "string"
+                        },
+                        "telegram_username": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-08-28T11:47:51.875946+07:00"
+                        },
+                        "tales": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "example": 1
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Яна в стране зелёных лесов и фиолетовых цветов"
+                              },
+                              "file_name": {
+                                "type": "string",
+                                "example": "tale_be6c1599-450f-4008-8cac-ee9ede0caccc.pdf"
+                              },
+                              "is_payed": {
+                                "type": "boolean",
+                                "example": true
+                              },
+                              "tale_generation_id": {
+                                "type": "string",
+                                "example": "be6c1599-450f-4008-8cac-ee9ede0caccc"
+                              },
+                              "child_data": {
+                                "type": "string",
+                                "example": "Яна, Яночка, Януся, девочка, 6 месяцев"
+                              },
+                              "preferences": {
+                                "type": "string",
+                                "example": "На данный момент Яна любит грызунки, ползать за всеми игрушками, смотреть телевизор, больше всего любит , чтобы носили на руках, обожает купаться , смотреть на воду, ловить струйки воды."
+                              },
+                              "moral": {
+                                "type": "string",
+                                "example": "Нужно быть смелой и ничего не бояться, мир любит тебя. Также главное быть доброй и всегда оставаться человеком, любить животных, но себя не давать в обиду."
+                              },
+                              "open_ai_answer": {
+                                "type": "object",
+                                "properties": {
+                                  "title": {
+                                    "type": "string",
+                                    "example": "Яна в стране зелёных лесов и фиолетовых цветов"
+                                  },
+                                  "chapters": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "text": {
+                                          "type": "string",
+                                          "example": "В одной маленькой деревушке..."
+                                        },
+                                        "title": {
+                                          "type": "string",
+                                          "example": "Яна в стране зелёных лесов и фиолетовых цветов"
+                                        },
+                                        "pic_generation": {
+                                          "type": "string",
+                                          "example": "girl, green leaves, purple flowers, sunny forest"
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "questions_about_tale": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "example": "Какие черты характера помогали Яне в её путешествиях?"
+                                    }
+                                  }
+                                }
+                              },
+                              "fabula_img_to_text_json": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string",
+                                    "example": "естественную сцену с обилием зеленой листвы и фиолетовых цветов"
+                                  },
+                                  "keywords": {
+                                    "type": "string",
+                                    "example": ""
+                                  },
+                                  "description": {
+                                    "type": "string",
+                                    "example": "естественную сцену с обилием зеленой листвы и фиолетовых цветов. Ключевые фразы: густая зелень, фиолетовые цветы, естественная обстановка, пышная листва, яркие цвета."
+                                  },
+                                  "en_keywords": {
+                                    "type": "string",
+                                    "example": ""
+                                  }
+                                }
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-08-28T11:48:00.580095+07:00"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/user/select-one/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get one user",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "token_number": {
+                              "type": "integer",
+                              "example": 299
+                            },
+                            "use_trial": {
+                              "type": "boolean",
+                              "example": false
+                            },
+                            "invite_code": {
+                              "type": "string"
+                            },
+                            "fist_name": {
+                              "type": "string"
+                            },
+                            "last_name": {
+                              "type": "string"
+                            },
+                            "telegram_username": {
+                              "type": "string"
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2024-06-27T17:53:14.360963+07:00"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    },
+    "/user/update-token-number": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user token number",
+        "security": [
+          {
+            "apiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "token_number": {
+                    "type": "integer",
+                    "example": 300
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "example": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/definitions/422-status"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "created-empty": {
+      "description": "Created",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 201
+              }
+            }
+          }
+        }
+      }
+    },
+    "200-status": {
+      "description": "OK",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 200
+              }
+            }
+          }
+        }
+      }
+    },
+    "uuid-param-arg": {
+      "in": "path",
+      "description": "Param type of id",
+      "required": true,
+      "name": "id",
+      "schema": {
+        "type": "string"
+      }
+    },
+    "400-status": {
+      "description": "Bad Request",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 400
+              }
+            }
+          }
+        }
+      }
+    },
+    "404-status": {
+      "description": "Not found",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 404
+              }
+            }
+          }
+        }
+      }
+    },
+    "403-status": {
+      "description": "Forbidden",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 403
+              }
+            }
+          }
+        }
+      }
+    },
+    "422-status": {
+      "description": "Unprocessable Entity",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "number",
+                "example": 422
+              },
+              "validationError": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "property": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,27 @@
+/tale/download/{file_name}:
+  get:
+    tags:
+      - Tale
+    summary: Get file
+    parameters:
+      - in: path
+        name: file_name
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: dir_path
+        required: false
+        schema:
+          type: string
+
+    responses:
+      200:
+        description: PDF file
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      422:
+        $ref: "#/definitions/422-status"
